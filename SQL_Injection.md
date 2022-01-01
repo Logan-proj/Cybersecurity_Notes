@@ -19,6 +19,8 @@ hold string data by submitting a series of UNION SELECT payloads that place a st
 ' UNION SELECT NULL,NULL,’a’,NULL --
 ' UNION SELECT NULL,NULL,NULL,’a’ --
 ```
+ - When determining the sata type from an *Oricle* database you will need to use the from clause. 
+    - Example: `' UNION SELECT ‘a’,NULL FROM DUAL--`
 
 ## Database version
 ### You can query the database to determine its type and version. This information is useful when formulating more complicated attacks.
