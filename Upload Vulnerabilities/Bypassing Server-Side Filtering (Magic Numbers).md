@@ -2,9 +2,21 @@
 1) **PHP Shell:** Pentest Monkey reverse shell [Link](https://raw.githubusercontent.com/pentestmonkey/php-reverse-shell/master/php-reverse-shell.php)
 	 * Before running shell make sure to have netcat listener set up to connect:
 		`$ nc -lvnp 1234`
-1) **List of file extentions with thier magic number:** [link](https://en.wikipedia.org/wiki/List_of_file_signatures)
+2) **List of file extentions with thier magic number:** [link](https://en.wikipedia.org/wiki/List_of_file_signatures)
 
-# Bypassing Server-Side Filtering (Magic Numbers)
+# Bypassing File Upload Filtering
+## Extension Validation
+A method of validation there files are checked by their file extentions by compairng them against a whitelist or blacklist.
+
+To bypass try changing to a different file exstention, for example
+- if filename.php is blocked try: 
+	-   .phtml
+	-   .php3
+	-   .php4
+	-   .php5
+	-   .phps
+
+## Magic Numbers
 Magic numbers can be used as a more accurate identifier of files. The magic number of a file is a string of hex digits, located within the first line of a file. Exploiting server-side filtering with magic numbers allows us to use magic numbers to validate file uploads by changing the first few bytes of a file we can upload a malicius .php file as a .jpg image allowing us to bypass a whitelist or a blacklist.
 
 Referencing [list of file signatures on Wikipedia](https://en.wikipedia.org/wiki/List_of_file_signatures) we see there are several possible magic numbers of JPEG files, example: `FF D8 FF DB`
