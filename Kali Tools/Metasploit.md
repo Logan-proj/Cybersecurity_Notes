@@ -84,14 +84,31 @@ MSFvenom is where a pentester can access all the payloads available within Metas
 
 # Meterpreter
 ## Description
-Meterpreter is a tool that runs within the target system's memory, acting as a command and control agent communicating with the attacked computer through encrypted communications. You can use Meterpreter commands to interact more easily with the target operating system and files.
+Meterpreter is a tool that runs within the target system's memory, acting as a command and control agent communicating with the attacked computer through encrypted communications. Meterpreter provides post-exploitation tools used to escalate privileges and move laterally. Additionally, you can use Meterpreter commands to interact more easily with the target operating system and files.
 - **Note:** most antivirus software will detect meterpreter and is not a stealth tool.
+
 Determining which Meterpreter payload to use can be decided using three factors:
 1) Target operating system (OSX, Linux, Windows, iOS, Android, etc.)
 2) Target system components (Python, PHP website, etc.)
 3) Network connection (TCP, HTTPS, etc.)
 - Search for Meterpreter shells using the command
 	- `msfvenom --list payloads | grep meterpreter`
+
+## Using Post-Exploitation Tools
+**Post exploitation goals:**
+- Gather information from the target system
+- Search for files, credentials, network interfaces, etc.
+- Escalate privileges
+- Move laterally to another machine on the network
+
+### Steps for using post-exploitation tools
+1) Background your current meterpreter session `ctrl + Z` to use other modules
+2) Check your currents sessions from msfconsole using `sessions` cmd
+	 - In the future, we can go back to this session using `sessions -i #`.
+3) Use the `back` cmd to exit the current module and load a post-exploitation module
+	- Example: `msf6 > use post/windows/gather/enum_shares`
+4) Set options for selected module and then set session id gathered previously `set SESSION 1`
+5) run
 
 ## Commands
 Meterpreter commands will be different for each version. To get a list of available commands, type `help`
@@ -100,3 +117,8 @@ Meterpreter commands will be different for each version. To get a list of availa
 	- Passwords are stored in the NTLM (New Technology LAN Manager) format.
 - `search` - Use to locate specific files within a system
 	- Example: `search -f flag.txt`
+- `ctrl + Z` - Opens background session to return to msfconsole
+- `sessions` - Shows current background sessions
+
+## Converting Normal Shell to Meterpreter
+**Reference:** [Upgrade Normal Shell To Meterpreter Shell](https://infosecwriteups.com/metasploit-upgrade-normal-shell-to-meterpreter-shell-2f09be895646)
