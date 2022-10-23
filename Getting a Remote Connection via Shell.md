@@ -11,8 +11,8 @@
 ## Tools
 Tools used to interface with, receive, and send reverse/bind shells:
 - [Netcat](https://github.com/Logan-proj/Cybersecurity_Notes/blob/main/Kali%20Tools/Netcat.md) 
-- [Metasploit (multi/handler)](obsidian://open?vault=CyberSecurity&file=Kali%20Tools%2FMetasploit)
-- [MSFvenom](obsidian://open?vault=CyberSecurity&file=Kali%20Tools%2FMetasploit)
+- [Metasploit (multi/handler)](https://github.com/Logan-proj/Cybersecurity_Notes/blob/main/Kali%20Tools/Metasploit.md)
+- [MSFvenom](https://github.com/Logan-proj/Cybersecurity_Notes/blob/main/Kali%20Tools/Metasploit.md)
 - [Payloads all the Things](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Methodology%20and%20Resources/Reverse%20Shell%20Cheatsheet.md)
 - [PentestMonkey Reverse Shell Cheatsheet](https://pentestmonkey.net/cheat-sheet/shells/reverse-shell-cheat-sheet)
 - [SecLists repo](https://github.com/danielmiessler/SecLists)
