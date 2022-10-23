@@ -10,7 +10,7 @@
 
 ## Tools
 Tools used to interface with, receive, and send reverse/bind shells:
-- [Netcat](obsidian://open?vault=CyberSecurity&file=Kali%20Tools%2FNetcat) 
+- [Netcat](https://github.com/Logan-proj/Cybersecurity_Notes/blob/main/Kali%20Tools/Netcat.md) 
 - [Metasploit (multi/handler)](obsidian://open?vault=CyberSecurity&file=Kali%20Tools%2FMetasploit)
 - [MSFvenom](obsidian://open?vault=CyberSecurity&file=Kali%20Tools%2FMetasploit)
 - [Payloads all the Things](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Methodology%20and%20Resources/Reverse%20Shell%20Cheatsheet.md)
